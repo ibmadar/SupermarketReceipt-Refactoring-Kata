@@ -1,0 +1,4 @@
+Receipt:
+Item: apples kilo - 2.5 - 1.99 - 4.975
+
+Total: 4.975

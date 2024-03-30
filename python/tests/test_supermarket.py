@@ -1,4 +1,5 @@
 import pytest
+import approvaltests
 
 from model_objects import Product, SpecialOfferType, ProductUnit
 from shopping_cart import ShoppingCart
@@ -22,11 +23,13 @@ def test_ten_percent_discount():
 
     receipt = teller.checks_out_articles_from(cart)
 
-    assert 4.975 == pytest.approx(receipt.total_price(), 0.01)
-    assert [] == receipt.discounts
-    assert 1 == len(receipt.items)
-    receipt_item = receipt.items[0]
-    assert apples == receipt_item.product
-    assert 1.99 == receipt_item.price
-    assert 2.5 * 1.99 == pytest.approx(receipt_item.total_price, 0.01)
-    assert 2.5 == receipt_item.quantity
+    # assert 4.975 == pytest.approx(receipt.total_price(), 0.01)
+    # assert [] == receipt.discounts
+    # assert 1 == len(receipt.items)
+    # receipt_item = receipt.items[0]
+    # assert apples == receipt_item.product
+    # assert 1.99 == receipt_item.price
+    # assert 2.5 * 1.99 == pytest.approx(receipt_item.total_price, 0.01)
+    # assert 2.5 == receipt_item.quantity
+
+    approvaltests.verify(receipt)

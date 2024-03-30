@@ -6,6 +6,9 @@ class ReceiptItem:
         self.price = price
         self.total_price = total_price
 
+    def __str__(self):
+        return f"Item: {self.product} - {self.quantity} - {self.price} - {self.total_price}\n"
+
 
 class Receipt:
     def __init__(self):
@@ -33,3 +36,10 @@ class Receipt:
     @property
     def discounts(self):
         return self._discounts[:]
+    
+    def __str__(self):
+        result = "Receipt:\n"
+        result += "\n".join(str(item) for item in self.items)
+        result += "\n".join(str(disc) for disc in self.discounts)
+        result += f"\nTotal: {self.total_price()}"
+        return result

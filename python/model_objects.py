@@ -6,6 +6,9 @@ class Product:
         self.name = name
         self.unit = unit
 
+    def __str__(self):
+        return self.name + " " + self.unit.name.lower()
+
 
 class ProductQuantity:
     def __init__(self, product, quantity):
@@ -30,9 +33,16 @@ class Offer:
         self.product = product
         self.argument = argument
 
+    def __str__(self):
+        return self.offer_type.name.lower() + " " + self.product.name + " " + str(self.argument) + "\n"
+        
+
 
 class Discount:
     def __init__(self, product, description, discount_amount):
         self.product = product
         self.description = description
         self.discount_amount = discount_amount
+
+    def __str__(self):
+        return self.description + " " + str(self.discount_amount)
