@@ -7,29 +7,151 @@ from teller import Teller
 from tests.fake_catalog import FakeCatalog
 
 
-def test_ten_percent_discount():
+def test_regular_shopping():
     catalog = FakeCatalog()
-    toothbrush = Product("toothbrush", ProductUnit.EACH)
-    catalog.add_product(toothbrush, 0.99)
 
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
     apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 0.99)    
     catalog.add_product(apples, 1.99)
 
     teller = Teller(catalog)
-    teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, toothbrush, 10.0)
 
+   
+    #Shopping cart
     cart = ShoppingCart()
-    cart.add_item_quantity(apples, 2.5)
+    cart.add_item(apples, 2.5)
+    cart.add_item(toothbrush, 2)
 
     receipt = teller.checks_out_articles_from(cart)
 
-    # assert 4.975 == pytest.approx(receipt.total_price(), 0.01)
-    # assert [] == receipt.discounts
-    # assert 1 == len(receipt.items)
-    # receipt_item = receipt.items[0]
-    # assert apples == receipt_item.product
-    # assert 1.99 == receipt_item.price
-    # assert 2.5 * 1.99 == pytest.approx(receipt_item.total_price, 0.01)
-    # assert 2.5 == receipt_item.quantity
+    approvaltests.verify(receipt)
+
+def test_ten_percent_discount():
+    catalog = FakeCatalog()
+
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 0.99)    
+    catalog.add_product(apples, 1.99)
+
+    teller = Teller(catalog)
+
+    #Add offers
+    teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, toothbrush, 10.0)
+
+    #Shopping cart
+    cart = ShoppingCart()
+    cart.add_item(apples, 2.5)
+    cart.add_item(toothbrush, 2)
+
+    receipt = teller.checks_out_articles_from(cart)
 
     approvaltests.verify(receipt)
+
+
+def test_same_item__added_multiple_times():
+    catalog = FakeCatalog()
+
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 0.99)    
+    catalog.add_product(apples, 1.99)
+
+    teller = Teller(catalog)
+
+    #Add offers
+    teller.add_special_offer(SpecialOfferType.TEN_PERCENT_DISCOUNT, toothbrush, 10.0)
+
+    #Shopping cart
+    cart = ShoppingCart()
+    cart.add_item(apples, 2.5)
+    cart.add_item(apples, 2)
+
+    receipt = teller.checks_out_articles_from(cart)
+
+    approvaltests.verify(receipt)    
+
+def test_no_offers():
+    catalog = FakeCatalog()
+
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 0.99)    
+    catalog.add_product(apples, 1.99)
+
+    teller = Teller(catalog)
+
+
+    #Shopping cart
+    cart = ShoppingCart()
+    cart.add_item(apples, 2.5)
+    cart.add_item(toothbrush, 2)
+
+    receipt = teller.checks_out_articles_from(cart)
+
+    approvaltests.verify(receipt)    
+
+
+def test_3x2_discount():
+    catalog = FakeCatalog()
+
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 2)    
+    catalog.add_product(apples, 1.99)
+
+    teller = Teller(catalog)
+
+    #Add offers
+    teller.add_special_offer(SpecialOfferType.THREE_FOR_TWO, toothbrush)
+
+    #Shopping cart
+    cart = ShoppingCart()
+    cart.add_item(apples, 2.5)
+    cart.add_item(toothbrush, 3)
+
+    receipt = teller.checks_out_articles_from(cart)
+
+    approvaltests.verify(receipt)    
+
+
+def test_2_for_amount_discount():
+    catalog = FakeCatalog()
+
+    #Products
+    toothbrush = Product("toothbrush", ProductUnit.EACH)
+    apples = Product("apples", ProductUnit.KILO)
+
+    #Add them to catalog
+    catalog.add_product(toothbrush, 2)    
+    catalog.add_product(apples, 1.99)
+
+    teller = Teller(catalog)
+
+    #Add offers
+    teller.add_special_offer(SpecialOfferType.TWO_FOR_AMOUNT, toothbrush,1.5)
+
+    #Shopping cart
+    cart = ShoppingCart()
+    cart.add_item(apples, 2.5)
+    cart.add_item(toothbrush, 3)
+
+    receipt = teller.checks_out_articles_from(cart)
+
+    approvaltests.verify(receipt)        

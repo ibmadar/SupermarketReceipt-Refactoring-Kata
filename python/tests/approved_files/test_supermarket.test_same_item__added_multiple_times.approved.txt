@@ -1,0 +1,3 @@
+Receipt:
+Item: apples (units:kilo) - Qty:4.5 - Unit price:1.99 - Price:8.955
+Total: 8.955

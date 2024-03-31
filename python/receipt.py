@@ -7,7 +7,7 @@ class ReceiptItem:
         self.total_price = total_price
 
     def __str__(self):
-        return f"Item: {self.product} - {self.quantity} - {self.price} - {self.total_price}\n"
+        return f"Item: {self.product} - Qty:{self.quantity} - Unit price:{self.price} - Price:{self.total_price}"
 
 
 class Receipt:
@@ -23,7 +23,8 @@ class Receipt:
             total += discount.discount_amount
         return total
 
-    def add_product(self, product, quantity, price, total_price):
+    def add_product(self, product, quantity, price):
+        total_price = quantity * price
         self._items.append(ReceiptItem(product, quantity, price, total_price))
 
     def add_discount(self, discount):

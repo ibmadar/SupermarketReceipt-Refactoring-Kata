@@ -1,0 +1,4 @@
+Receipt:
+Item: apples (units:kilo) - Qty:2.5 - Unit price:1.99 - Price:4.975
+Item: toothbrush (units:each) - Qty:3 - Unit price:2 - Price:6 Discount: Prod:toothbrush (units:each) [Desc:Buy 3 for $4  Disc. Amount:-2]
+Total: 8.975
